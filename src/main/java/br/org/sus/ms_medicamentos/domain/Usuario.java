@@ -30,4 +30,5 @@ public class Usuario {
     public TipoUsuario getTipo() {
         return tipo;
     }
+
 }

@@ -24,7 +24,14 @@ public class CadastrarUsuarioMedicamentoUseCase implements CadastrarUsuarioMedic
     @Override
     public UsuarioMedicamentoOutput cadastrar(UsuarioMedicamentoInput input) {
         Usuario usuario = usuarioMedicamentoPortOut.buscarUsuarioPorId(input.usuarioId());
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado com ID: " + input.usuarioId());
+        }
+
         Medicamento medicamento = usuarioMedicamentoPortOut.buscarMedicamentoPorId(input.medicamentoId());
+        if (medicamento == null) {
+            throw new RuntimeException("Medicamento não encontrado com ID: " + input.medicamentoId());
+        }
 
         UsuarioMedicamento usuarioMedicamento = new UsuarioMedicamento(
                 UUID.randomUUID(),
