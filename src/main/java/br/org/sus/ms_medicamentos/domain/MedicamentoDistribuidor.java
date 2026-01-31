@@ -1,0 +1,41 @@
+package br.org.sus.ms_medicamentos.domain;
+
+import org.hibernate.validator.constraints.UUID;
+
+import java.time.LocalDate;
+
+public class MedicamentoDistribuidor {
+    private UUID uuid;
+    private Medicamento medicamento;
+    private DistribuidorSUS distribuidor;
+    private int quantidade;
+    private LocalDate ultimaAtualizacao;
+
+    public MedicamentoDistribuidor(UUID uuid, Medicamento medicamento, DistribuidorSUS distribuidor, int quantidade, LocalDate ultimaAtualizacao) {
+        this.uuid = uuid;
+        this.medicamento = medicamento;
+        this.distribuidor = distribuidor;
+        this.quantidade = quantidade;
+        this.ultimaAtualizacao = ultimaAtualizacao;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
+
+    public DistribuidorSUS getDistribuidor() {
+        return distribuidor;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public LocalDate getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
+}
