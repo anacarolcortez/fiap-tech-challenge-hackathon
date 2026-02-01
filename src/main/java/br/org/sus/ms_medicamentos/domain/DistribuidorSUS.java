@@ -6,6 +6,8 @@ public class DistribuidorSUS {
     private UUID uuid;
     private String nome;
     private String CNPJ;
+    private String telefone;
+    private String horarioFuncionamento;
     private TipoDistribuidor tipo;
     private String logradouro;
     private String bairro;
@@ -13,10 +15,15 @@ public class DistribuidorSUS {
     private String estado;
     private String cep;
 
-    public DistribuidorSUS(UUID uuid, String nome, String CNPJ, TipoDistribuidor tipo, String logradouro, String bairro, String cidade, String estado, String cep) {
+    public DistribuidorSUS(UUID uuid, String nome, String CNPJ, String telefone,
+                           String horarioFuncionamento, TipoDistribuidor tipo,
+                           String logradouro, String bairro, String cidade,
+                           String estado, String cep) {
         this.uuid = uuid;
         this.nome = nome;
         this.CNPJ = CNPJ;
+        this.telefone = telefone;
+        this.horarioFuncionamento = horarioFuncionamento;
         this.tipo = tipo;
         this.logradouro = logradouro;
         this.bairro = bairro;
@@ -47,6 +54,22 @@ public class DistribuidorSUS {
 
     public void setCNPJ(String CNPJ) {
         this.CNPJ = CNPJ;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getHorarioFuncionamento() {
+        return horarioFuncionamento;
+    }
+
+    public void setHorarioFuncionamento(String horarioFuncionamento) {
+        this.horarioFuncionamento = horarioFuncionamento;
     }
 
     public TipoDistribuidor getTipo() {
