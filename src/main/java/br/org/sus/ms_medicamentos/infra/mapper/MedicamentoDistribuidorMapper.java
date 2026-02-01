@@ -9,8 +9,7 @@ public class MedicamentoDistribuidorMapper {
                 entity.getUuid(),
                 MedicamentoMapper.toDomain(entity.getMedicamento()),
                 DistribuidorMapper.toDomain(entity.getDistribuidor()),
-                entity.getQuantidade(),
-                entity.getUltimaAtualizacao()
+                entity.getQuantidade()
         );
     }
 

@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public interface JpaMedicamentoDistribuidorRepository extends JpaRepository<JpaMedicamentoDistribuidorEntity, UUID> {
@@ -22,4 +25,15 @@ public interface JpaMedicamentoDistribuidorRepository extends JpaRepository<JpaM
     """)
     JpaMedicamentoDistribuidorEntity addStock(@Param("uuidMedicamentoDistribuidor") UUID uuidMedicamentoDistribuidor,
                  @Param("addAmount") int addAmount);
+
+    @Query("""
+        SELECT md
+          FROM JpaMedicamentoDistribuidorEntity md
+          JOIN md.medicamento m
+         WHERE LOWER(m.nome) LIKE LOWER(CONCAT('%', :nomeRemedio, '%'))
+    """)
+    Page<JpaMedicamentoDistribuidorEntity> findByNomeRemedio(
+            @Param("nomeRemedio") String nomeRemedio,
+            Pageable pageable
+    );
 }

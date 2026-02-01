@@ -10,12 +10,15 @@ public class MedicamentoDistribuidor {
     private int quantidade;
     private LocalDate ultimaAtualizacao;
 
-    public MedicamentoDistribuidor(UUID uuid, Medicamento medicamento, DistribuidorSUS distribuidor, int quantidade, LocalDate ultimaAtualizacao) {
+    public MedicamentoDistribuidor(UUID uuid,
+                                   Medicamento medicamento,
+                                   DistribuidorSUS distribuidor,
+                                   int quantidade) {
         this.uuid = uuid;
         this.medicamento = medicamento;
         this.distribuidor = distribuidor;
         this.quantidade = quantidade;
-        this.ultimaAtualizacao = ultimaAtualizacao;
+        this.ultimaAtualizacao = LocalDate.now();
     }
 
     public UUID getUuid() {
