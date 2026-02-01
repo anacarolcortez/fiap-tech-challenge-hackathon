@@ -18,6 +18,12 @@ public class JpaUsuarioEntity {
     private String CPF;
 
     @Column(nullable = false)
+    private String telefone;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -27,9 +33,12 @@ public class JpaUsuarioEntity {
     public JpaUsuarioEntity() {
     }
 
-    public JpaUsuarioEntity(UUID uuid, String CPF, String senha, TipoUsuario tipo) {
+    public JpaUsuarioEntity(UUID uuid, String CPF, String telefone,
+                            String email, String senha, TipoUsuario tipo) {
         this.uuid = uuid;
         this.CPF = CPF;
+        this.telefone = telefone;
+        this.email = email;
         this.senha = senha;
         this.tipo = tipo;
     }
@@ -48,6 +57,22 @@ public class JpaUsuarioEntity {
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -70,11 +95,11 @@ public class JpaUsuarioEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         JpaUsuarioEntity that = (JpaUsuarioEntity) o;
-        return Objects.equals(uuid, that.uuid) && Objects.equals(CPF, that.CPF) && Objects.equals(senha, that.senha) && tipo == that.tipo;
+        return Objects.equals(uuid, that.uuid) && Objects.equals(CPF, that.CPF) && Objects.equals(telefone, that.telefone) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && tipo == that.tipo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, CPF, senha, tipo);
+        return Objects.hash(uuid, CPF, telefone, email, senha, tipo);
     }
 }

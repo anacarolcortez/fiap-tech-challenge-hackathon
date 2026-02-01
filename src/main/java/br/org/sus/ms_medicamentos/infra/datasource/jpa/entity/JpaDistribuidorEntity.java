@@ -20,6 +20,12 @@ public class JpaDistribuidorEntity {
     @Column(nullable = false)
     private String CNPJ;
 
+    @Column(nullable = false)
+    private String telefone;
+
+    @Column(nullable = false)
+    private String horarioFuncionamento;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoDistribuidor tipo;
@@ -38,10 +44,15 @@ public class JpaDistribuidorEntity {
     public JpaDistribuidorEntity() {
     }
 
-    public JpaDistribuidorEntity(UUID uuid, String nome, String CNPJ, TipoDistribuidor tipo, String logradouro, String bairro, String cidade, String estado, String cep) {
+    public JpaDistribuidorEntity(UUID uuid, String nome, String CNPJ,
+                                 String telefone, String horarioFuncionamento,
+                                 TipoDistribuidor tipo, String logradouro, String bairro,
+                                 String cidade, String estado, String cep) {
         this.uuid = uuid;
         this.nome = nome;
         this.CNPJ = CNPJ;
+        this.telefone = telefone;
+        this.horarioFuncionamento = horarioFuncionamento;
         this.tipo = tipo;
         this.logradouro = logradouro;
         this.bairro = bairro;
@@ -72,6 +83,22 @@ public class JpaDistribuidorEntity {
 
     public void setCNPJ(String CNPJ) {
         this.CNPJ = CNPJ;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getHorarioFuncionamento() {
+        return horarioFuncionamento;
+    }
+
+    public void setHorarioFuncionamento(String horarioFuncionamento) {
+        this.horarioFuncionamento = horarioFuncionamento;
     }
 
     public TipoDistribuidor getTipo() {
@@ -126,11 +153,11 @@ public class JpaDistribuidorEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         JpaDistribuidorEntity that = (JpaDistribuidorEntity) o;
-        return Objects.equals(uuid, that.uuid) && Objects.equals(nome, that.nome) && Objects.equals(CNPJ, that.CNPJ) && tipo == that.tipo && Objects.equals(logradouro, that.logradouro) && Objects.equals(bairro, that.bairro) && Objects.equals(cidade, that.cidade) && Objects.equals(estado, that.estado) && Objects.equals(cep, that.cep);
+        return Objects.equals(uuid, that.uuid) && Objects.equals(nome, that.nome) && Objects.equals(CNPJ, that.CNPJ) && Objects.equals(telefone, that.telefone) && Objects.equals(horarioFuncionamento, that.horarioFuncionamento) && tipo == that.tipo && Objects.equals(logradouro, that.logradouro) && Objects.equals(bairro, that.bairro) && Objects.equals(cidade, that.cidade) && Objects.equals(estado, that.estado) && Objects.equals(cep, that.cep);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, nome, CNPJ, tipo, logradouro, bairro, cidade, estado, cep);
+        return Objects.hash(uuid, nome, CNPJ, telefone, horarioFuncionamento, tipo, logradouro, bairro, cidade, estado, cep);
     }
 }

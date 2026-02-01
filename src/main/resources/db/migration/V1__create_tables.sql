@@ -8,6 +8,8 @@ CREATE TABLE distribuidor (
                               uuid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                               nome VARCHAR(255) NOT NULL,
                               cnpj VARCHAR(20) NOT NULL,
+                              horario_funcionamento VARCHAR(50) NOT NULL,
+                              telefone VARCHAR(20) NOT NULL,
                               tipo VARCHAR(50) NOT NULL,
                               logradouro VARCHAR(255),
                               bairro VARCHAR(255),
@@ -32,6 +34,8 @@ CREATE TABLE medicamento (
 CREATE TABLE usuario (
                          uuid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                          cpf VARCHAR(14) NOT NULL,
+                         email VARCHAR(100) NOT NULL,
+                         telefone VARCHAR(20) NOT NULL,
                          senha VARCHAR(255) NOT NULL,
                          tipo VARCHAR(50) NOT NULL
 );
