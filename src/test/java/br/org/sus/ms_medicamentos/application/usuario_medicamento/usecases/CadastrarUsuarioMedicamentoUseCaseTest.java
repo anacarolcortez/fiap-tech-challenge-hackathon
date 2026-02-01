@@ -45,7 +45,9 @@ class CadastrarUsuarioMedicamentoUseCaseTest {
         usuario = new Usuario(
                 usuarioId,
                 "11122233344",
-                "email",
+                "11912345678",
+                "email@email.com",
+                "senh@Segur@",
                 TipoUsuario.PACIENTE
         );
 

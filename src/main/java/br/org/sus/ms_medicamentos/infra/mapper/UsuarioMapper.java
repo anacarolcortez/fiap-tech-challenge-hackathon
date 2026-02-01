@@ -15,6 +15,8 @@ public class UsuarioMapper {
         return new Usuario(
                 entity.getUuid(),
                 entity.getCPF(),
+                entity.getTelefone(),
+                entity.getEmail(),
                 entity.getSenha(),
                 entity.getTipo()
         );
@@ -28,6 +30,8 @@ public class UsuarioMapper {
         return new JpaUsuarioEntity(
                 domain.getUuid(),
                 domain.getCPF(),
+                domain.getTelefone(),
+                domain.getEmail(),
                 domain.getSenha(),
                 domain.getTipo()
         );

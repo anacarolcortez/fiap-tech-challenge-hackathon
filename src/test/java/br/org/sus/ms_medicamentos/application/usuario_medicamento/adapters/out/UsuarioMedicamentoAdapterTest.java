@@ -52,6 +52,8 @@ class UsuarioMedicamentoAdapterTest {
     private String senha = "senha";
     private String paracetamol = "paracetamol";
     private String lote = "123456";
+    private String telefone = "11912345678";
+    private String email = "email@email.com";
 
     @BeforeEach
     void setUp() {
@@ -62,6 +64,8 @@ class UsuarioMedicamentoAdapterTest {
         jpaUsuarioEntity = new JpaUsuarioEntity(
                 usuarioId,
                 cpf,
+                telefone,
+                email,
                 senha,
                 TipoUsuario.PACIENTE
         );
