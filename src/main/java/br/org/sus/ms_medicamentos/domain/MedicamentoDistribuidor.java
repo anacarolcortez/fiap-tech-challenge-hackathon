@@ -1,8 +1,7 @@
 package br.org.sus.ms_medicamentos.domain;
 
-import org.hibernate.validator.constraints.UUID;
-
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class MedicamentoDistribuidor {
     private UUID uuid;

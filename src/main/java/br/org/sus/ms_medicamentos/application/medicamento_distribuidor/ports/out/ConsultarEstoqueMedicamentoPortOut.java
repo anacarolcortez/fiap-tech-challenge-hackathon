@@ -4,7 +4,7 @@ import br.org.sus.ms_medicamentos.domain.MedicamentoDistribuidor;
 
 import java.util.UUID;
 
-public interface AtualizarEstoqueMedicamentoPortOut {
+public interface ConsultarEstoqueMedicamentoPortOut {
 
-    MedicamentoDistribuidor adicionarQuantidade(UUID uuidMedicamentoDistribuidor, int qtdAdicionada);
+    MedicamentoDistribuidor consultar(UUID uuidMedicamentoDistribuidor);
 }
