@@ -11,8 +11,5 @@ WORKDIR /app
 # Copia o JAR do projeto
 COPY --from=build /app/target/*.jar app.jar
 
-# Define variáveis de ambiente padrão
-ENV SPRING_PROFILES_ACTIVE=prod
-
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

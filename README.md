@@ -12,25 +12,25 @@ Para facilitar a avaliação e o desenvolvimento, utilizamos Docker e Docker Com
 
 🛠️ Passo a Passo
 
-    Clone o repositório:
-    Bash
+Clone o repositório:
+Bash
 
-    git clone https://github.com/seu-usuario/ms-medicamentos.git
-    cd ms-medicamentos
+git clone <repo>
+cd ms-medicamentos
 
-    Configure as Variáveis de Ambiente: Crie um arquivo chamado .env na raiz do projeto e preencha com as credenciais (exemplo):
-    Code snippet
+Configure as Variáveis de Ambiente: Crie um arquivo chamado .env na raiz do projeto e preencha com as credenciais (exemplo):
+Code snippet
 
-    DB_NAME=medicamento_db
-    DB_USER=postgres
-    DB_PASSWORD=dracarys11
+DB_NAME=medicamento_db
+DB_USER=postgres
+DB_PASSWORD=dracarys11
 
-    Suba os containers:
-    Bash
+Suba os containers:
+Bash
 
-    docker compose up --build
-
-    Este comando irá compilar o código Java (Multistage Build), criar a imagem Docker e iniciar o banco Postgres com os scripts de população inicial.
+```
+docker compose up --build
+```
 
 🏗️ Arquitetura e Infraestrutura
 
