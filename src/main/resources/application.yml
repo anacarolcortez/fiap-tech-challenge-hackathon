@@ -13,3 +13,7 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: validate
+
+logging:
+  level:
+    org.flywaydb: INFO
