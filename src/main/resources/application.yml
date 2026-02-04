@@ -10,6 +10,6 @@ spring:
     locations: classpath:db/migration
 
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: validate
-    defer-datasource-initialization: false
