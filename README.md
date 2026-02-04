@@ -63,17 +63,16 @@ PUT /estoque/{uuidRemedio}
 Request:
 
 ```
-
+{
+    "uuid": "",
+    "quantidade": 50
+}
 ```
 
 3. Listar Medicamentos por Nome
 
 GET /estoque/{nomeRemedio}?page=0&size=10
 
-Response:
-```
-
-```
 
 🗃️ Dados de Teste (Mock)
 

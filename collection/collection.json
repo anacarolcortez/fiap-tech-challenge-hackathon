@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "19529067-27df-4169-9c88-e427c2eb00dd",
+		"name": "Hackathon FIAP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "49021122"
+	},
+	"item": [
+		{
+			"name": "Listagem Remédios nas UBS",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/estoque/Amoxicilina"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Estoque",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uuid\": \"\",\n    \"quantidade\": 50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/estoque"
+			},
+			"response": []
+		},
+		{
+			"name": "Salvar Usuario Medicamento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"usuarioId\": \"uuid-usuario\"\n    \"medicamentoId\": \"uuid-medicamento\",\n    \"notificacaoAtiva\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/usuario_medicamento"
+			},
+			"response": []
+		}
+	]
+}
