@@ -20,6 +20,9 @@ public class ConsultarEstoqueMedicamentoAdapter implements ConsultarEstoqueMedic
     @Override
     public MedicamentoDistribuidor consultar(UUID uuidMedicamentoDistribuidor) {
         var entity = repository.findByUuid(uuidMedicamentoDistribuidor);
+        if (entity == null) {
+            return null;
+        }
         return MedicamentoDistribuidorMapper.toDomain(entity);
     }
 }
