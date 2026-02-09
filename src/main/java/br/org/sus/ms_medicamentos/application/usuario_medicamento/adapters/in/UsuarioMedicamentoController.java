@@ -4,12 +4,12 @@ import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dt
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dtos.response.UsuarioMedicamentoResponse;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.ports.in.CadastrarUsuarioMedicamentoPortIn;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.usecases.dto.UsuarioMedicamentoInput;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuario_medicamento")
@@ -22,7 +22,7 @@ public class UsuarioMedicamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioMedicamentoResponse> cadastrar(@RequestBody UsuarioMedicamentoRequest request) {
+    public ResponseEntity<UsuarioMedicamentoResponse> cadastrar(@Valid @RequestBody UsuarioMedicamentoRequest request) {
 
         var output = useCase.cadastrar(new UsuarioMedicamentoInput(
                 request.usuarioId(),
@@ -36,6 +36,6 @@ public class UsuarioMedicamentoController {
                         output.notificacaoAtiva(),
                         output.dataCadastro()
                 ));
-
     }
+
 }
