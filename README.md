@@ -12,21 +12,24 @@ Para facilitar a avaliação e o desenvolvimento, utilizamos Docker e Docker Com
 
 🛠️ Passo a Passo
 
-Clone o repositório:
-Bash
+1. Clone o repositório:
 
+```
 git clone <repo>
 cd ms-medicamentos
+```
 
-Configure as Variáveis de Ambiente: Crie um arquivo chamado .env na raiz do projeto e preencha com as credenciais (exemplo):
-Code snippet
+2. Configure as Variáveis de Ambiente: 
 
+Crie um arquivo chamado .env na raiz do projeto e preencha com as credenciais (exemplo):
+
+```
 DB_NAME=medicamento_db
 DB_USER=postgres
 DB_PASSWORD=dracarys11
+```
 
-Suba os containers:
-Bash
+3. Suba os containers:
 
 ```
 docker compose up --build
@@ -43,6 +46,7 @@ A aplicação foi desenhada para ser Cloud Native:
     Deploy: Dockerfile preparado para AWS App Runner / ECS.
 
 🔌 Endpoints Principais
+
 1. Atualizar Estoque
 
 PUT /estoque
@@ -85,3 +89,11 @@ Ao iniciar o banco, o sistema é populado automaticamente com:
     Medicamentos (ex: Dipirona, Amoxicilina).
 
     Nota: As senhas dos usuários mockados são password123.
+
+📚 Documentação:
+
+Para acessar a documentação via Swagger, com a aplicação rodando, acesse:
+
+```
+http://localhost:8080/swagger-ui.html
+```
