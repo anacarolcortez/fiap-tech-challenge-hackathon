@@ -1,5 +1,6 @@
 package br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in;
 
+import jakarta.validation.Valid;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dtos.request.UsuarioMedicamentoRequest;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dtos.response.UsuarioMedicamentoResponse;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.ports.in.CadastrarUsuarioMedicamentoPortIn;
@@ -22,7 +23,7 @@ public class UsuarioMedicamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioMedicamentoResponse> cadastrar(@RequestBody UsuarioMedicamentoRequest request) {
+    public ResponseEntity<UsuarioMedicamentoResponse> cadastrar(@Valid @RequestBody UsuarioMedicamentoRequest request) {
 
         var output = useCase.cadastrar(new UsuarioMedicamentoInput(
                 request.usuarioId(),
