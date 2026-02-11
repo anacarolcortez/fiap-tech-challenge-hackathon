@@ -43,4 +43,6 @@ public class MedicamentoDistribuidorController {
         var result = listagemUseCase.listar(nomeRemedio, page, size);
         return ResponseEntity.ok(result);
     }
+
+
 }

@@ -95,4 +95,262 @@ class MedicamentoDistribuidorControllerTest {
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.totalElements").exists());
     }
+
+    // Error test scenarios
+    @Test
+    @DisplayName("Deve retornar 400 quando quantidade é negativa")
+    void deveRetornar400QuandoQuantidadeNegativa() throws Exception {
+        UUID uuidRequest = UUID.randomUUID();
+        int quantidadeNegativa = -10;
+
+        var requestJson = """
+            {
+              "uuid": "%s",
+              "quantidade": %d
+            }
+        """.formatted(uuidRequest, quantidadeNegativa);
+
+        Mockito.when(estoqueUseCase.adicionarQuantidade(Mockito.any()))
+                .thenThrow(new IllegalArgumentException("Quantidade deve ser positiva"));
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando quantidade é zero")
+    void deveRetornar400QuandoQuantidadeZero() throws Exception {
+        UUID uuidRequest = UUID.randomUUID();
+        int quantidadeZero = 0;
+
+        var requestJson = """
+            {
+              "uuid": "%s",
+              "quantidade": %d
+            }
+        """.formatted(uuidRequest, quantidadeZero);
+
+        Mockito.when(estoqueUseCase.adicionarQuantidade(Mockito.any()))
+                .thenThrow(new IllegalArgumentException("Quantidade deve ser positiva"));
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 500 quando use case lança RuntimeException")
+    void deveRetornar500QuandoUseCaseLancaExcecao() throws Exception {
+        UUID uuidRequest = UUID.randomUUID();
+        int quantidade = 50;
+
+        var requestJson = """
+            {
+              "uuid": "%s",
+              "quantidade": %d
+            }
+        """.formatted(uuidRequest, quantidade);
+
+        Mockito.when(estoqueUseCase.adicionarQuantidade(Mockito.any()))
+                .thenThrow(new RuntimeException("Erro interno"));
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isInternalServerError());
+    }
+
+
+    @Test
+    @DisplayName("Deve retornar 400 quando tamanho da página é negativo")
+    void deveRetornar400QuandoTamanhoPaginaNegativo() throws Exception {
+        String nomeRemedio = "Dipirona";
+
+        Mockito.when(listagemUseCase.listar(Mockito.anyString(), Mockito.anyInt(), Mockito.intThat(size -> size < 0)))
+                .thenThrow(new IllegalArgumentException("Size must be positive"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "0")
+                        .param("size", "-1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 200 quando busca retorna lista vazia")
+    void deveRetornar200QuandoListaVazia() throws Exception {
+        String nomeRemedio = "MedicamentoInexistente";
+
+        var page = new PageImpl<EstoqueMedicamentoResponse>(List.of());
+
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeRemedio), Mockito.anyInt(), Mockito.anyInt()))
+                .thenReturn(page);
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "0")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
+    @DisplayName("Deve retornar 500 quando listagem lança RuntimeException")
+    void deveRetornar500QuandoListagemLancaExcecao() throws Exception {
+        String nomeRemedio = "Dipirona";
+
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeRemedio), Mockito.anyInt(), Mockito.anyInt()))
+                .thenThrow(new RuntimeException("Erro na busca"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "0")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando UUID é inválido")
+    void deveRetornar400QuandoUuidInvalido() throws Exception {
+        var requestJson = """
+            {
+              "uuid": "uuid-invalido",
+              "quantidade": 50
+            }
+        """;
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando JSON está malformado")
+    void deveRetornar400QuandoJsonMalformado() throws Exception {
+        var requestJson = """
+            {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "quantidade": 50
+            """;
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando corpo da requisição está vazio")
+    void deveRetornar400QuandoCorpoVazio() throws Exception {
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 415 quando Content-Type não é JSON")
+    void deveRetornar415QuandoContentTypeNaoJson() throws Exception {
+        UUID uuidRequest = UUID.randomUUID();
+        int quantidade = 50;
+        var requestBody = "uuid=" + uuidRequest + "&quantidade=" + quantidade;
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(requestBody))
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 409 quando use case lança IllegalStateException")
+    void deveRetornar409QuandoUseCaseLancaIllegalStateException() throws Exception {
+        UUID uuidRequest = UUID.randomUUID();
+        int quantidade = 50;
+        var requestJson = """
+            {
+              "uuid": "%s",
+              "quantidade": %d
+            }
+        """.formatted(uuidRequest, quantidade);
+
+        Mockito.when(estoqueUseCase.adicionarQuantidade(Mockito.any()))
+                .thenThrow(new IllegalStateException("Estoque insuficiente"));
+
+        mockMvc.perform(put("/estoque")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 404 quando nomeRemedio está vazio na URL")
+    void deveRetornar404QuandoNomeRemedioVazioNaUrl() throws Exception {
+        mockMvc.perform(get("/estoque/")  // URL sem path variable
+                        .param("page", "0")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando use case lança IllegalArgumentException")
+    void deveRetornar400QuandoUseCaseLancaIllegalArgumentException() throws Exception {
+        String nomeInvalido = "abc";
+
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeInvalido), Mockito.anyInt(), Mockito.anyInt()))
+                .thenThrow(new IllegalArgumentException("Nome do remédio inválido"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeInvalido)
+                        .param("page", "0")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando page é negativo")
+    void deveRetornar400QuandoPageNegativo() throws Exception {
+        String nomeRemedio = "Dipirona";
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeRemedio), Mockito.intThat(page -> page < 0), Mockito.anyInt()))
+                .thenThrow(new IllegalArgumentException("Page must be non-negative"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "-1")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando size é zero")
+    void deveRetornar400QuandoSizeZero() throws Exception {
+        String nomeRemedio = "Dipirona";
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeRemedio), Mockito.anyInt(), Mockito.intThat(size -> size <= 0)))
+                .thenThrow(new IllegalArgumentException("Size must be positive"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "0")
+                        .param("size", "0")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 400 quando size é muito grande")
+    void deveRetornar400QuandoSizeMuitoGrande() throws Exception {
+        String nomeRemedio = "Dipirona";
+        Mockito.when(listagemUseCase.listar(Mockito.eq(nomeRemedio), Mockito.anyInt(), Mockito.intThat(size -> size > 100)))
+                .thenThrow(new IllegalArgumentException("Size too large"));
+
+        mockMvc.perform(get("/estoque/{nomeRemedio}", nomeRemedio)
+                        .param("page", "0")
+                        .param("size", "101")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 }
