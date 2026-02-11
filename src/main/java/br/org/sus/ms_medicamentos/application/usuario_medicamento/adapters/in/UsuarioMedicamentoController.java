@@ -1,5 +1,8 @@
 package br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dtos.request.UsuarioMedicamentoRequest;
 import br.org.sus.ms_medicamentos.application.usuario_medicamento.adapters.in.dtos.response.UsuarioMedicamentoResponse;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuario_medicamento")
+@Tag(name = "Vínculo Usuário-Medicamento", description = "Endpoints para gerenciar os medicamentos associados aos usuários")
 public class UsuarioMedicamentoController {
 
     private final CadastrarUsuarioMedicamentoPortIn useCase;
@@ -22,6 +26,9 @@ public class UsuarioMedicamentoController {
         this.useCase = useCase;
     }
 
+    @Operation(summary = "Cadastra vínculo", description = "Associa um medicamento a um usuário e define se as notificações estão ativas.")
+    @ApiResponse(responseCode = "201", description = "Vínculo criado com sucesso")
+    @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     @PostMapping
     public ResponseEntity<UsuarioMedicamentoResponse> cadastrar(@Valid @RequestBody UsuarioMedicamentoRequest request) {
 
