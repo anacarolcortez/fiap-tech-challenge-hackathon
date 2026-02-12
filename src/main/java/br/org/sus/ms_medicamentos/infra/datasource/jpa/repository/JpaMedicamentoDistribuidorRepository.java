@@ -19,12 +19,13 @@ public interface JpaMedicamentoDistribuidorRepository extends JpaRepository<JpaM
     @Modifying
     @Transactional
     @Query("""
-        UPDATE JpaMedicamentoDistribuidorEntity md
-           SET md.quantidade = md.quantidade + :addAmount
-         WHERE md.uuid = :uuidMedicamentoDistribuidor
+    UPDATE JpaMedicamentoDistribuidorEntity md
+       SET md.quantidade = md.quantidade + :addAmount,
+           md.ultimaAtualizacao = CURRENT_DATE
+     WHERE md.uuid = :uuidMedicamentoDistribuidor
     """)
-    JpaMedicamentoDistribuidorEntity addStock(@Param("uuidMedicamentoDistribuidor") UUID uuidMedicamentoDistribuidor,
-                 @Param("addAmount") int addAmount);
+        int addStock(@Param("uuidMedicamentoDistribuidor") UUID uuidMedicamentoDistribuidor,
+                     @Param("addAmount") int addAmount);
 
     @Query("""
         SELECT md

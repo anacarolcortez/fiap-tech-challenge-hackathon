@@ -21,6 +21,18 @@ public class MedicamentoDistribuidor {
         this.ultimaAtualizacao = LocalDate.now();
     }
 
+    public MedicamentoDistribuidor(UUID uuid,
+                                   Medicamento medicamento,
+                                   DistribuidorSUS distribuidor,
+                                   int quantidade,
+                                   LocalDate ultimaAtualizacao) {
+        this.uuid = uuid;
+        this.medicamento = medicamento;
+        this.distribuidor = distribuidor;
+        this.quantidade = quantidade;
+        this.ultimaAtualizacao = ultimaAtualizacao;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

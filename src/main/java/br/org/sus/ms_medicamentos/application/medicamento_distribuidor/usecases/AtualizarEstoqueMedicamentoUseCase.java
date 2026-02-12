@@ -36,8 +36,8 @@ public class AtualizarEstoqueMedicamentoUseCase implements AtualizarEstoqueMedic
         }
 
         logger.info("Atualizando estoque de medicamento-distribuidor com o UUID " + request.uuid());
-        var mdAtualizado = atualizarEstoqueMedicamentoPortOut.adicionarQuantidade(medicamentoDistribuidor.getUuid(), request.quantidade());
+        var medicamentoAtualizado = atualizarEstoqueMedicamentoPortOut.adicionarQuantidade(medicamentoDistribuidor.getUuid(), request.quantidade());
 
-        return AtualizarEstoqueMedicamentoResponse.fromDomain(mdAtualizado);
+        return AtualizarEstoqueMedicamentoResponse.fromDomain(medicamentoAtualizado);
     }
 }

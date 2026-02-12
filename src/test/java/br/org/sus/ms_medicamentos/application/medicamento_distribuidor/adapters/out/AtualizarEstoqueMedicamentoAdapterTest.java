@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,13 +47,17 @@ class AtualizarEstoqueMedicamentoAdapterTest {
         entityMock.setQuantidade(150);
         entityMock.setMedicamento(medicamentoEntity);
         entityMock.setDistribuidor(distribuidorEntity);
+        entityMock.setUltimaAtualizacao(LocalDate.now());
 
-        when(repository.addStock(uuid, quantidade)).thenReturn(entityMock);
+        when(repository.addStock(uuid, quantidade)).thenReturn(1);
+        when(repository.findById(uuid)).thenReturn(Optional.of(entityMock));
 
         MedicamentoDistribuidor resultado = adapter.adicionarQuantidade(uuid, quantidade);
 
         assertNotNull(resultado);
         assertEquals(uuid, resultado.getUuid());
+        assertEquals(150, resultado.getQuantidade());
         verify(repository, times(1)).addStock(uuid, quantidade);
+        verify(repository, times(1)).findById(uuid);
     }
 }

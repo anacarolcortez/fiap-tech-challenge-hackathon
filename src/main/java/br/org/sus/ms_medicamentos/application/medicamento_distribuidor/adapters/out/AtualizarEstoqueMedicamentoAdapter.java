@@ -18,8 +18,16 @@ public class AtualizarEstoqueMedicamentoAdapter implements AtualizarEstoqueMedic
     }
 
     @Override
-    public MedicamentoDistribuidor adicionarQuantidade(UUID uuidMedicamentoDistribuidor, int qtdAdicionada) {
-        var md = repository.addStock(uuidMedicamentoDistribuidor, qtdAdicionada);
+    public MedicamentoDistribuidor adicionarQuantidade(UUID uuid, int qtd) {
+        int updated = repository.addStock(uuid, qtd);
+
+        if (updated == 0) {
+            throw new RuntimeException("Nenhum registro atualizado");
+        }
+
+        var md = repository.findById(uuid)
+                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+
         return MedicamentoDistribuidorMapper.toDomain(md);
     }
 }

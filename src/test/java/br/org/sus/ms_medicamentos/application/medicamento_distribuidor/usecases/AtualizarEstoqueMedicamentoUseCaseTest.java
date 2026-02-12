@@ -65,7 +65,6 @@ public class AtualizarEstoqueMedicamentoUseCaseTest {
         );
 
         when(consultarEstoqueMedicamentoPortOut.consultar(uuid)).thenReturn(medicamentoMock);
-        when(atualizarEstoqueMedicamentoPortOut.adicionarQuantidade(uuid, 50)).thenReturn(medicamentoMock);
 
         AtualizarEstoqueMedicamentoResponse response = atualizarEstoqueMedicamentoUseCase.adicionarQuantidade(request);
 
